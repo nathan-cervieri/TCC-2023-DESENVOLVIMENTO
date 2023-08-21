@@ -1,0 +1,4 @@
+1. Create Basic frontend -> Text box + buton + result
+2. Create Basic back end -> Receive text -> return text
+3. Create conversion -> Convert part of received text
+4. Create conversion paterns -> Add regex for conversion.

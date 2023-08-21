@@ -1,0 +1,16 @@
+alterar arquivos de maneira automatizada (RF)
+2 semanas
+
+criar relatório de alterações manuais e automáticas (RF);
+2 semanas
+
+TODO: Interação do usuário na tela.
+
+permitir análise de viabilidade para conversão de projeto completo:
+1 semana?
+ 
+permitir análise de viabilidade para conversão de arquivos singulares (RF)
+uma semana
+
+
+

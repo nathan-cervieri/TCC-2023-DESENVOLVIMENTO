@@ -1,0 +1,7 @@
+05/08 -> 5h: Creation of backend and frontend project, start of frontend development + first class
+14/08 -> 5h: Reorganizing project and separating parts of code for easier look around
+15/08 -> 3h: Class
+17/08 -> 3h: Meeting with professor, finished deciding on method and started test development
+18/08 -> 3h: Continued testing development, trouble deciding on non optimal case
+19/08 -> 6h: Mulled over optimal case, tested different hipotesis, decided on multiple find replace for each "change"
+20/08 -> 4h: rewritten tests in order to consider new find replace, as well as further project structure rewrites (identified possible performance issues and optimization possibility)
