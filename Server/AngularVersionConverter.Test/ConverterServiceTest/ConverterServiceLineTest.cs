@@ -1,6 +1,6 @@
 ﻿using AngularVersionConverter.Application.Services;
 using AngularVersionConverter.Domain.Entities.VersionChange;
-using AngularVersionConverter.Domain.Models.VersionChange;
+using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
 using AngularVersionConverterApplication.Interfaces.Repository;
 using Moq;
@@ -90,6 +90,28 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             updatedLine.Should().Be(newLine);
         }
 
+        [Theory]
+        [InlineData("makeStateKey, StateKey, TransferState")]
+        [InlineData("makeStateKey, StateKey")]
+        [InlineData("makeStateKey, TransferState")]
+        [InlineData("StateKey, TransferState")]
+        [InlineData("makeStateKey")]
+        [InlineData("StateKey")]
+        [InlineData("TransferState")]
+        public void MultipleImportIsFromDifferentPackage_MustReplaceLine(string testCase)
+        {
+            // Setup
+            var baseLine = "import { " + testCase + "} from '@angular/platform-browser'";
+            var versionChangeList = new List<VersionChange> { };
+
+            // Act
+            var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList);
+
+            // Assert
+            var newLine = "import { " + testCase + "} from '@angular/core'";
+            returnLine.Should().Be(newLine);
+        }
+
         public static VersionChange CreateVersionChangeXhrFactory()
         {
             return new VersionChange
@@ -122,6 +144,36 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                         WhatReplaceRegex = @"XhrFactory\s*,\s*",
                         ReplaceText = @"",
                         NewLine = @"import { XhrFactory } from '@angular/common"
+                    }
+                },
+                Description = "Simple import change"
+            };
+        }
+
+        public static VersionChange CreateVersionChangeAngularPlatformBrowser()
+        {
+            return new VersionChange
+            {
+                Id = new Guid(),
+                Version = Models.AngularVersionEnum.Angular15,
+                ChangeType = ChangeTypeEnum.MultipleImportOriginChange,
+                ChangeFinderRegexString = @"^import.*(StateKey|TransferState)+.*'@angular/platform-browser'$",
+                FindReplaceList = new List<FindReplace>
+                {
+                    new FindReplace
+                    {
+                        Type = FindReplaceTypeEnum.MultipleReplace,
+                        FindChangeString = @"({\s*(((StateKey|makeStateKey|TransferState),?)+\s*)+\s*}",
+                        WhatReplaceRegex = @"@angular/platform-browser",
+                        ReplaceText = @"@angular/core",
+                    },
+                    new FindReplace
+                    {
+                        Type = FindReplaceTypeEnum.MultipleAndNewLine,
+                        FindChangeString = @"{.*,\s*(((StateKey|makeStateKey|TransferState)+),?)+\s*}",
+                        WhatReplaceRegex = @"makeStateKey|StateKey|TransferState",
+                        ReplaceText = @"",
+                        NewLine = @"import { {import} } from '@angular/core"
                     }
                 },
                 Description = "Simple import change"

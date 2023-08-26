@@ -1,5 +1,5 @@
 ﻿using AngularVersionConverter.Domain.Entities.VersionChange;
-using AngularVersionConverter.Domain.Models.VersionChange;
+using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
 using AngularVersionConverter.Models;
 using AngularVersionConverterApplication.Interfaces.Repository;

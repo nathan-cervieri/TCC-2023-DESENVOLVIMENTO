@@ -1,4 +1,6 @@
-﻿namespace AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace
+﻿using AngularVersionConverter.Domain.Entities.VersionChange;
+
+namespace AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace
 {
     public class FindReplace
     {

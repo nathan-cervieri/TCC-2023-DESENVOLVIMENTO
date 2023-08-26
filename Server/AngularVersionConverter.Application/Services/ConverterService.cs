@@ -1,7 +1,7 @@
 ﻿using AngularVersionConverter.Application.Extensions;
 using AngularVersionConverter.Application.Interfaces;
 using AngularVersionConverter.Domain.Entities.VersionChange;
-using AngularVersionConverter.Domain.Models.VersionChange;
+using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
 using AngularVersionConverter.Models;
 using AngularVersionConverterApplication.Interfaces.Repository;
@@ -44,7 +44,7 @@ namespace AngularVersionConverter.Application.Services
             return finalLine;
         }
 
-        private string HandleVersionChange(string line, VersionChange versionChange)
+        private static string HandleVersionChange(string line, VersionChange versionChange)
         {
             if (line.IsNotMatchFor(versionChange.ChangeFinderRegexString))
             {
@@ -54,7 +54,7 @@ namespace AngularVersionConverter.Application.Services
             return ApplyVersionChange(line, versionChange);
         }
 
-        private string ApplyVersionChange(string line, VersionChange change)
+        private static string ApplyVersionChange(string line, VersionChange change)
         {
             if (change.ChangeType == ChangeTypeEnum.None)
             {
