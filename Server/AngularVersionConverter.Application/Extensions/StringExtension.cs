@@ -18,6 +18,11 @@ namespace AngularVersionConverter.Application.Extensions
             return regex.IsMatch(stringToMatch);
         }
 
+        public static bool IsMatchFor(this string stringToMatch, Regex regex)
+        {
+            return regex.IsMatch(stringToMatch);
+        }
+
         public static bool IsNotMatchFor(this string stringToMatch, string regexString)
         {
             var regex = new Regex(regexString);

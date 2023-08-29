@@ -4,6 +4,7 @@ using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
 using AngularVersionConverterApplication.Interfaces.Repository;
 using Moq;
+using System.Text;
 
 namespace AngularVersionConverter.Test.ConverterServiceTest
 {
@@ -102,13 +103,31 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
         {
             // Setup
             var baseLine = "import { " + testCase + "} from '@angular/platform-browser'";
-            var versionChangeList = new List<VersionChange> { };
+            var versionChangeList = new List<VersionChange> { CreateVersionChangeAngularPlatformBrowser() };
 
             // Act
             var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList);
 
             // Assert
             var newLine = "import { " + testCase + "} from '@angular/core'";
+            returnLine.Should().Be(newLine);
+        }
+
+        [Theory]
+        [InlineData("teste, makeStateKey, teste, StateKey, TransferState", "teste, teste", "makeStateKey, StateKey, TransferState")]
+        [InlineData("makeStateKey, StateKey, teste", "teste", "makeStateKey, StateKey")]
+        [InlineData("teste, makeStateKey, TransferState", "teste", "makeStateKey, TransferState")]
+        public void MultipleImportIsFromDifferentPackage_MustReplaceAndNewLine(string testCase, string baseResult, string newLineResult)
+        {
+            // Setup
+            var baseLine = "import { " + testCase + " } from '@angular/platform-browser'";
+            var versionChangeList = new List<VersionChange> { CreateVersionChangeAngularPlatformBrowser() };
+
+            // Act
+            var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList);
+
+            // Assert
+            var newLine = "import { " + baseResult + " } from '@angular/platform-browser'\r\nimport { " + newLineResult + " } from '@angular/core'";
             returnLine.Should().Be(newLine);
         }
 
@@ -157,23 +176,23 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                 Id = new Guid(),
                 Version = Models.AngularVersionEnum.Angular15,
                 ChangeType = ChangeTypeEnum.MultipleImportOriginChange,
-                ChangeFinderRegexString = @"^import.*(StateKey|TransferState)+.*'@angular/platform-browser'$",
+                ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser'$",
                 FindReplaceList = new List<FindReplace>
                 {
                     new FindReplace
                     {
-                        Type = FindReplaceTypeEnum.MultipleReplace,
-                        FindChangeString = @"({\s*(((StateKey|makeStateKey|TransferState),?)+\s*)+\s*}",
+                        Type = FindReplaceTypeEnum.Replace,
+                        FindChangeString = @"{\s*(((StateKey|makeStateKey|TransferState),?)+\s*)+\s*}",
                         WhatReplaceRegex = @"@angular/platform-browser",
                         ReplaceText = @"@angular/core",
                     },
                     new FindReplace
                     {
-                        Type = FindReplaceTypeEnum.MultipleAndNewLine,
-                        FindChangeString = @"{.*,\s*(((StateKey|makeStateKey|TransferState)+),?)+\s*}",
+                        Type = FindReplaceTypeEnum.MultipleReplaceAndNewLine,
+                        FindChangeString = @"{(.*,\s*)?(makeStateKey|StateKey|TransferState)+\s*(,.*)?}",
                         WhatReplaceRegex = @"makeStateKey|StateKey|TransferState",
                         ReplaceText = @"",
-                        NewLine = @"import { {import} } from '@angular/core"
+                        NewLine = @"import { {replaced} } from '@angular/core'"
                     }
                 },
                 Description = "Simple import change"

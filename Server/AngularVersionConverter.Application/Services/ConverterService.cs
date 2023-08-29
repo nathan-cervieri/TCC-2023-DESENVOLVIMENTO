@@ -56,19 +56,20 @@ namespace AngularVersionConverter.Application.Services
 
         private static string ApplyVersionChange(string line, VersionChange change)
         {
-            if (change.ChangeType == ChangeTypeEnum.None)
+            var changeType = change.ChangeType;
+            if (changeType == ChangeTypeEnum.None)
             {
                 throw new ArgumentException("VersionChange invalid", nameof(change));
             }
-            if (change.ChangeType == ChangeTypeEnum.SingleImportOriginChange)
+            if (changeType == ChangeTypeEnum.SingleImportOriginChange || changeType == ChangeTypeEnum.MultipleImportOriginChange)
             {
-                return ApplySingleImportOriginChange(line, change.FindReplaceList);
+                return ApplyImportOriginChange(line, change.FindReplaceList);
             }
 
             throw new InvalidOperationException("Change type not yet supported");
         }
 
-        private static string ApplySingleImportOriginChange(string line, IEnumerable<FindReplace> findReplaceChanges)
+        private static string ApplyImportOriginChange(string line, IEnumerable<FindReplace> findReplaceChanges)
         {
             foreach (var findReplace in findReplaceChanges)
             {
@@ -77,33 +78,37 @@ namespace AngularVersionConverter.Application.Services
                     continue;
                 }
 
-                return ApplyFindReplace(line, findReplace);
+                return ApplyFindReplaceImport(line, findReplace);
             }
 
             return line;
         }
 
-        private static string ApplyFindReplace(string line, FindReplace findReplace)
+        private static string ApplyFindReplaceImport(string line, FindReplace findReplace)
         {
             if (findReplace.Type == FindReplaceTypeEnum.Replace)
             {
-                return HandleFindReplaceTypeReplace(line, findReplace);
+                return HandleFindReplaceImportTypeReplace(line, findReplace);
             }
             if (findReplace.Type == FindReplaceTypeEnum.ReplaceAndNewLine)
             {
-                return HandleFindReplaceTypeReplaceAndNewLine(line, findReplace);
+                return HandleFindReplaceImportTypeReplaceAndNewLine(line, findReplace);
+            }
+            if(findReplace.Type == FindReplaceTypeEnum.MultipleReplaceAndNewLine)
+            {
+                return HandleFindReplaceImportTypeMultipleReplaceAndNewLine(line, findReplace);
             }
 
             throw new InvalidOperationException();
         }
 
-        private static string HandleFindReplaceTypeReplace(string line, FindReplace findReplace)
+        private static string HandleFindReplaceImportTypeReplace(string line, FindReplace findReplace)
         {
             var regex = new Regex(findReplace.WhatReplaceRegex);
             return regex.Replace(line, findReplace.ReplaceText);
         }
 
-        private static string HandleFindReplaceTypeReplaceAndNewLine(string line, FindReplace findReplace)
+        private static string HandleFindReplaceImportTypeReplaceAndNewLine(string line, FindReplace findReplace)
         {
             var regex = new Regex(findReplace.WhatReplaceRegex);
             var replacedLine = regex.Replace(line, findReplace.ReplaceText);
@@ -113,6 +118,37 @@ namespace AngularVersionConverter.Application.Services
             finalLineBuilder.Append(findReplace.NewLine);
 
             return finalLineBuilder.ToString();
+        }
+
+        private static string HandleFindReplaceImportTypeMultipleReplaceAndNewLine(string line, FindReplace findReplace)
+        {
+            var firstSplit = line.Split("{");
+            var secondSplit = firstSplit[1].Split("}");
+            var forSearchString = secondSplit[0];
+            var separatedSearchString = forSearchString.Split(",");
+
+            var regex = new Regex(findReplace.WhatReplaceRegex);
+            var defaultLineImport = new List<string>();
+            var separateLineImport = new List<string>();
+            foreach(var import in separatedSearchString)
+            {
+                if(import.IsMatchFor(regex)) {
+                    separateLineImport.Add(import.Trim());
+                    continue;
+                }
+
+                defaultLineImport.Add(import.Trim());
+            }
+
+            var finalResult = new StringBuilder();
+            finalResult.Append(firstSplit[0]);
+            finalResult.Append("{ ");
+            finalResult.Append(string.Join(", ", defaultLineImport));
+            finalResult.Append(" }");
+            finalResult.AppendLine(secondSplit[1]);
+            finalResult.Append(findReplace.NewLine.Replace("{replaced}", string.Join(", ", separateLineImport)));
+
+            return finalResult.ToString();
         }
     }
 }
