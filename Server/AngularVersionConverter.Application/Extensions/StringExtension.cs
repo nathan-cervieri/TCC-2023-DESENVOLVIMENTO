@@ -25,8 +25,7 @@ namespace AngularVersionConverter.Application.Extensions
 
         public static bool IsNotMatchFor(this string stringToMatch, string regexString)
         {
-            var regex = new Regex(regexString);
-            return !regex.IsMatch(stringToMatch);
+            return !stringToMatch.IsMatchFor(stringToMatch);
         }
 
     }

@@ -4,7 +4,6 @@ using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
 using AngularVersionConverterApplication.Interfaces.Repository;
 using Moq;
-using System.Text;
 
 namespace AngularVersionConverter.Test.ConverterServiceTest
 {
@@ -195,7 +194,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                         NewLine = @"import { {replaced} } from '@angular/core'"
                     }
                 },
-                Description = "Simple import change"
+                Description = "Complex import change"
             };
         }
     }

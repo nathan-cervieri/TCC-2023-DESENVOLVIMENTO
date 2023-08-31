@@ -43,8 +43,33 @@ namespace AngularVersionConverter.Infra.Repositories.Mocked
                     }
                 },
                 Description = "Simple import change"
+            }, new VersionChange
+            {
+                Id = new Guid(),
+                Version = AngularVersionEnum.Angular15,
+                ChangeType = ChangeTypeEnum.MultipleImportOriginChange,
+                ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser'$",
+                FindReplaceList = new List<FindReplace>
+                {
+                    new FindReplace
+                    {
+                        Type = FindReplaceTypeEnum.Replace,
+                        FindChangeString = @"{\s*(((StateKey|makeStateKey|TransferState),?)+\s*)+\s*}",
+                        WhatReplaceRegex = @"@angular/platform-browser",
+                        ReplaceText = @"@angular/core",
+                    },
+                    new FindReplace
+                    {
+                        Type = FindReplaceTypeEnum.MultipleReplaceAndNewLine,
+                        FindChangeString = @"{(.*,\s*)?(makeStateKey|StateKey|TransferState)+\s*(,.*)?}",
+                        WhatReplaceRegex = @"makeStateKey|StateKey|TransferState",
+                        ReplaceText = @"",
+                        NewLine = @"import { {replaced} } from '@angular/core'"
+                    }
+                },
+                Description = "complex import change"
             }
-        };
+    };
 
         public IEnumerable<VersionChange> GetAll()
         {
