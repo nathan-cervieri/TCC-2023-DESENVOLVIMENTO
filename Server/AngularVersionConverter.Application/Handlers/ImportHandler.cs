@@ -8,8 +8,9 @@ namespace AngularVersionConverter.Application.Handlers
 {
     public class ImportHandler
     {
-        public static string ApplyImportOriginChange(string line, IEnumerable<FindReplace> findReplaceChanges)
+        public static string ApplyImportOriginChange(string line, VersionChange change, ReportBuilder reportBuilder)
         {
+            var findReplaceChanges = change.FindReplaceList;
             foreach (var findReplace in findReplaceChanges)
             {
                 if (line.IsNotMatchFor(findReplace.FindChangeString))
@@ -17,6 +18,7 @@ namespace AngularVersionConverter.Application.Handlers
                     continue;
                 }
 
+                //reportBuilder.AddChange(change.Description, change.Version, findReplace.Type);
                 return ApplyFindReplaceImport(line, findReplace);
             }
 

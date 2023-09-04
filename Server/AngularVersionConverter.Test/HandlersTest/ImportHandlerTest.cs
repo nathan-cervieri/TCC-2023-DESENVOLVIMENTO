@@ -1,60 +1,12 @@
 ﻿using AngularVersionConverter.Application.Handlers;
-using AngularVersionConverter.Application.Services;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
-using AngularVersionConverterApplication.Interfaces.Repository;
-using Moq;
 
-namespace AngularVersionConverter.Test.ConverterServiceTest
+namespace AngularVersionConverter.Test.HandlersTest
 {
-    public class ConverterServiceTest
+    public class ImportHandlerTest
     {
-        private readonly Mock<IVersionChangeRepository> versionChangeRepository;
-        private readonly ConverterService converterService;
-
-        public ConverterServiceTest()
-        {
-            versionChangeRepository = new Mock<IVersionChangeRepository>();
-            converterService = new ConverterService(versionChangeRepository.Object);
-        }
-
-        [Fact]
-        public void LineIsEmpty_ShouldReturnEmptyString()
-        {
-            // Act
-            var returnString = converterService.ConvertAngularLine(string.Empty, new List<VersionChange>(), new ReportBuilder());
-
-            // Assert
-            returnString.Should().Be(string.Empty);
-        }
-
-        [Fact]
-        public void LineIsWhiteSpace_ShouldReturnEmptyString()
-        {
-            // Act
-            var returnString = converterService.ConvertAngularLine("     ", new List<VersionChange>(), new ReportBuilder());
-
-            // Assert
-            returnString.Should().Be(string.Empty);
-        }
-
-        [Fact]
-        public void VersionChangeIsInvalid_ShouldThrowInvalidArgumentException()
-        {
-            // Setup
-            var versionChange = new VersionChange
-            {
-                ChangeType = ChangeTypeEnum.None
-            };
-            var versionChangeList = new List<VersionChange> { versionChange };
-
-            // Act
-            var act = () => converterService.ConvertAngularLine("test", versionChangeList, new ReportBuilder());
-
-            // Assert
-            act.Should().Throw<ArgumentException>();
-        }
 
         [Fact]
         public void ImportIsFromDifferentPackage_MustReplaceLocation()
@@ -62,10 +14,10 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             // Setup
             var oldImportLine = "import { XhrFactory } from '@angular/common/http';";
 
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeXhrFactory() };
+            var versionChange = CreateVersionChangeXhrFactory();
 
             // Act
-            var updatedLine = converterService.ConvertAngularLine(oldImportLine, versionChangeList, new ReportBuilder());
+            var updatedLine = ImportHandler.ApplyImportOriginChange(oldImportLine, versionChange, new ReportBuilder());
 
             // Assert
             var newLine = "import { XhrFactory } from '@angular/common';";
@@ -80,11 +32,10 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
         {
             // Setup
             var oldImportLine = testCase;
-
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeXhrFactory() };
+            var versionChange = CreateVersionChangeXhrFactory();
 
             // Act
-            var updatedLine = converterService.ConvertAngularLine(oldImportLine, versionChangeList, new ReportBuilder());
+            var updatedLine = ImportHandler.ApplyImportOriginChange(oldImportLine, versionChange, new ReportBuilder());
 
             // Assert
             var newLine = "import { " + extraImports + " } from '@angular/common/http\r\nimport { XhrFactory } from '@angular/common";
@@ -103,14 +54,14 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
         {
             // Setup
             var baseLine = "import { " + testCase + "} from '@angular/platform-browser'";
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeAngularPlatformBrowser() };
+            var versionChange = CreateVersionChangeAngularPlatformBrowser();
 
             // Act
-            var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList, new ReportBuilder());
+            var updatedLine = ImportHandler.ApplyImportOriginChange(baseLine, versionChange, new ReportBuilder());
 
             // Assert
             var newLine = "import { " + testCase + "} from '@angular/core'";
-            returnLine.Should().Be(newLine);
+            updatedLine.Should().Be(newLine);
         }
 
         [Theory]
@@ -121,14 +72,14 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
         {
             // Setup
             var baseLine = "import { " + testCase + " } from '@angular/platform-browser'";
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeAngularPlatformBrowser() };
+            var versionChange = CreateVersionChangeAngularPlatformBrowser();
 
             // Act
-            var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList, new ReportBuilder());
+            var updatedLine = ImportHandler.ApplyImportOriginChange(baseLine, versionChange, new ReportBuilder());
 
             // Assert
             var newLine = "import { " + baseResult + " } from '@angular/platform-browser'\r\nimport { " + newLineResult + " } from '@angular/core'";
-            returnLine.Should().Be(newLine);
+            updatedLine.Should().Be(newLine);
         }
 
         public static VersionChange CreateVersionChangeXhrFactory()
@@ -198,5 +149,6 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                 Description = "Complex import change"
             };
         }
+
     }
 }

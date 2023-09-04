@@ -1,5 +1,4 @@
-﻿using AngularVersionConverter.Application.Interfaces;
-using AngularVersionConverter.Application.Services;
+﻿using AngularVersionConverter.Application.Services;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
@@ -8,12 +7,12 @@ using Moq;
 
 namespace AngularVersionConverter.Test.ConverterServiceTest
 {
-    public class ConverterServiceFileTest
+    public class ReportTest
     {
         private readonly Mock<IVersionChangeRepository> versionChangeRepository;
-        private readonly IConverterService converterService;
+        private readonly ConverterService converterService;
 
-        public ConverterServiceFileTest()
+        public ReportTest()
         {
             versionChangeRepository = new Mock<IVersionChangeRepository>();
             converterService = new ConverterService(versionChangeRepository.Object);
@@ -83,7 +82,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                         NewLine = @"import { {replaced} } from '@angular/core'"
                     }
                 },
-                Description = "complex import change"
+                Description = "Complex import change"
             };
         }
     }
