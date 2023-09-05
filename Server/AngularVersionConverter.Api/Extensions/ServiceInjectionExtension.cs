@@ -10,7 +10,7 @@ namespace AngularVersionConverter.Api.Extensions
         public static void AddService(this IServiceCollection services)
         {
             services.AddScoped<IConverterService, ConverterService>();
-            services.AddScoped<IVersionChangeRepository, VersionChangeRepository>();
+            services.AddScoped<IVersionChangeRepository, MockVersionChangeRepository>();
         }
     }
 }

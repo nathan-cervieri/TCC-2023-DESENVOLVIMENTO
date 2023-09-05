@@ -6,7 +6,7 @@ using AngularVersionConverterApplication.Interfaces.Repository;
 
 namespace AngularVersionConverter.Infra.Repositories.Mocked
 {
-    public class VersionChangeRepository : IVersionChangeRepository
+    public class MockVersionChangeRepository : IVersionChangeRepository
     {
         private static readonly IEnumerable<VersionChange> versionChangeList = new List<VersionChange>
         {

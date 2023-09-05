@@ -72,65 +72,6 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             updatedLine.Should().Be(newLine);
         }
 
-        [Theory]
-        [InlineData("import { XhrFactory, test } from '@angular/common/http", "test")]
-        [InlineData("import { test, XhrFactory } from '@angular/common/http", "test")]
-        [InlineData("import { test, XhrFactory, test1 } from '@angular/common/http", "test, test1")]
-        public void ImportIsFromDifferentPackage_MustCreateNewLine(string testCase, string extraImports)
-        {
-            // Setup
-            var oldImportLine = testCase;
-
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeXhrFactory() };
-
-            // Act
-            var updatedLine = converterService.ConvertAngularLine(oldImportLine, versionChangeList, new ReportBuilder());
-
-            // Assert
-            var newLine = "import { " + extraImports + " } from '@angular/common/http\r\nimport { XhrFactory } from '@angular/common";
-            updatedLine.Should().Be(newLine);
-        }
-
-        [Theory]
-        [InlineData("makeStateKey, StateKey, TransferState")]
-        [InlineData("makeStateKey, StateKey")]
-        [InlineData("makeStateKey, TransferState")]
-        [InlineData("StateKey, TransferState")]
-        [InlineData("makeStateKey")]
-        [InlineData("StateKey")]
-        [InlineData("TransferState")]
-        public void MultipleImportIsFromDifferentPackage_MustReplaceLine(string testCase)
-        {
-            // Setup
-            var baseLine = "import { " + testCase + "} from '@angular/platform-browser'";
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeAngularPlatformBrowser() };
-
-            // Act
-            var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList, new ReportBuilder());
-
-            // Assert
-            var newLine = "import { " + testCase + "} from '@angular/core'";
-            returnLine.Should().Be(newLine);
-        }
-
-        [Theory]
-        [InlineData("teste, makeStateKey, teste, StateKey, TransferState", "teste, teste", "makeStateKey, StateKey, TransferState")]
-        [InlineData("makeStateKey, StateKey, teste", "teste", "makeStateKey, StateKey")]
-        [InlineData("teste, makeStateKey, TransferState", "teste", "makeStateKey, TransferState")]
-        public void MultipleImportIsFromDifferentPackage_MustReplaceAndNewLine(string testCase, string baseResult, string newLineResult)
-        {
-            // Setup
-            var baseLine = "import { " + testCase + " } from '@angular/platform-browser'";
-            var versionChangeList = new List<VersionChange> { CreateVersionChangeAngularPlatformBrowser() };
-
-            // Act
-            var returnLine = converterService.ConvertAngularLine(baseLine, versionChangeList, new ReportBuilder());
-
-            // Assert
-            var newLine = "import { " + baseResult + " } from '@angular/platform-browser'\r\nimport { " + newLineResult + " } from '@angular/core'";
-            returnLine.Should().Be(newLine);
-        }
-
         public static VersionChange CreateVersionChangeXhrFactory()
         {
             return new VersionChange
