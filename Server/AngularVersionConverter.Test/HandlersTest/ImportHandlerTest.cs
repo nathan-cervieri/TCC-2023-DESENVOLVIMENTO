@@ -65,9 +65,9 @@ namespace AngularVersionConverter.Test.HandlersTest
         }
 
         [Theory]
-        [InlineData("teste, makeStateKey, teste, StateKey, TransferState", "teste, teste", "makeStateKey, StateKey, TransferState")]
-        [InlineData("makeStateKey, StateKey, teste", "teste", "makeStateKey, StateKey")]
-        [InlineData("teste, makeStateKey, TransferState", "teste", "makeStateKey, TransferState")]
+        [InlineData("test, makeStateKey, test, StateKey, TransferState", "test, test", "makeStateKey, StateKey, TransferState")]
+        [InlineData("makeStateKey, StateKey, test", "test", "makeStateKey, StateKey")]
+        [InlineData("test, makeStateKey, TransferState", "test", "makeStateKey, TransferState")]
         public void MultipleImportIsFromDifferentPackage_MustReplaceAndNewLine(string testCase, string baseResult, string newLineResult)
         {
             // Setup

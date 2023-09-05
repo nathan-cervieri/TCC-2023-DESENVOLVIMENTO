@@ -14,13 +14,13 @@ namespace AngularVersionConverter.Test.HandlersTest
             var reportBuilder = new ReportBuilder();
 
             // Act
-            reportBuilder.AddChange("teste", AngularVersionEnum.Angular15);
+            reportBuilder.AddChange("test", AngularVersionEnum.Angular15);
             var report = reportBuilder.Build();
 
             // Assert
             var reportChange = new ReportChange
             {
-                ChangeDescription = "teste",
+                ChangeDescription = "test",
                 OriginVersion = AngularVersionEnum.Angular15,
                 LinesChanged = new int[] { 1 }
             };
@@ -36,13 +36,13 @@ namespace AngularVersionConverter.Test.HandlersTest
             var reportBuilder = new ReportBuilder();
 
             // Act
-            reportBuilder.AddExtraLineChange("teste", AngularVersionEnum.Angular15);
+            reportBuilder.AddExtraLineChange("test", AngularVersionEnum.Angular15);
             var report = reportBuilder.Build();
 
             // Assert
             var reportChange = new ReportChange
             {
-                ChangeDescription = "teste",
+                ChangeDescription = "test",
                 OriginVersion = AngularVersionEnum.Angular15,
                 LinesChanged = new int[] { 1, 2 }
             };
@@ -60,13 +60,13 @@ namespace AngularVersionConverter.Test.HandlersTest
             var reportBuilder = new ReportBuilder();
 
             // Act
-            reportBuilder.AddChange("teste", AngularVersionEnum.Angular15, findReplaceTypeEnum);
+            reportBuilder.AddChange("test", AngularVersionEnum.Angular15, findReplaceTypeEnum);
             var report = reportBuilder.Build();
 
             // Assert
             var reportChange = new ReportChange
             {
-                ChangeDescription = "teste",
+                ChangeDescription = "test",
                 OriginVersion = AngularVersionEnum.Angular15,
                 LinesChanged = new int[] { 1 }
             };
@@ -85,13 +85,13 @@ namespace AngularVersionConverter.Test.HandlersTest
             var reportBuilder = new ReportBuilder();
 
             // Act
-            reportBuilder.AddChange("teste", AngularVersionEnum.Angular15, findReplaceTypeEnum);
+            reportBuilder.AddChange("test", AngularVersionEnum.Angular15, findReplaceTypeEnum);
             var report = reportBuilder.Build();
 
             // Assert
             var reportChange = new ReportChange
             {
-                ChangeDescription = "teste",
+                ChangeDescription = "test",
                 OriginVersion = AngularVersionEnum.Angular15,
                 LinesChanged = new int[] { 1, 2 }
             };
@@ -107,11 +107,11 @@ namespace AngularVersionConverter.Test.HandlersTest
             var reportBuilder = new ReportBuilder();
 
             // Act
-            reportBuilder.AddFinishedFile("teste");
+            reportBuilder.AddFinishedFile("test");
             var report = reportBuilder.Build();
 
             // Assert
-            report.ReturnFile.Should().Be("teste");
+            report.ReturnFile.Should().Be("test");
         }
 
         [Fact]
@@ -121,21 +121,21 @@ namespace AngularVersionConverter.Test.HandlersTest
             var reportBuilder = new ReportBuilder();
 
             // Act
-            reportBuilder.AddChange("teste", AngularVersionEnum.Angular15);
+            reportBuilder.AddChange("test", AngularVersionEnum.Angular15);
             reportBuilder.IncrementLine();
-            reportBuilder.AddChange("teste 2", AngularVersionEnum.Angular15);
+            reportBuilder.AddChange("test 2", AngularVersionEnum.Angular15);
             var report = reportBuilder.Build();
 
             // Assert
             var reportChange1 = new ReportChange
             {
-                ChangeDescription = "teste",
+                ChangeDescription = "test",
                 OriginVersion = AngularVersionEnum.Angular15,
                 LinesChanged = new int[] { 1 }
             };
             var reportChange2 = new ReportChange
             {
-                ChangeDescription = "teste 2",
+                ChangeDescription = "test 2",
                 OriginVersion = AngularVersionEnum.Angular15,
                 LinesChanged = new int[] { 2 }
             };

@@ -6,7 +6,7 @@ namespace AngularVersionConverter.Test.GeneralTest
         public void VerifyTestWorks()
         {
             Assert.True(true);
-            "teste".Should().Be("teste");
+            "test".Should().Be("test");
         }
     }
 }
