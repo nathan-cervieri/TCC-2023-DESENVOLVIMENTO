@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AngularVersionConverter.Application.Extensions
 {
@@ -26,6 +27,12 @@ namespace AngularVersionConverter.Application.Extensions
         public static bool IsNotMatchFor(this string stringToMatch, string regexString)
         {
             return !stringToMatch.IsMatchFor(regexString);
+        }
+
+        public static Stream ToStream(this string file)
+        {
+            byte[] byteArray = Encoding.ASCII.GetBytes(file);
+            return new MemoryStream(byteArray);
         }
 
     }

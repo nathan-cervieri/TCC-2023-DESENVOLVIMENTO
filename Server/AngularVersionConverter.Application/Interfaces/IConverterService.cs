@@ -7,7 +7,9 @@ namespace AngularVersionConverter.Application.Interfaces
 {
     public interface IConverterService
     {
-        public Report ConvertAngularFile(Stream streamToConvert, AngularVersionEnum versionFrom, AngularVersionEnum versionTo);
-        public string ConvertAngularLine(string stringToConvert, IEnumerable<VersionChange> versionChangeList, ReportBuilder reportBuilder);
+        IEnumerable<AngularVersionEnum> GetAngularVersionEnums();
+        Report GetAllOneTimeReports(AngularVersionEnum versionFrom, AngularVersionEnum versionTo);
+        Report ConvertAngularFile(Stream streamToConvert, AngularVersionEnum versionFrom, AngularVersionEnum versionTo);
+        string ConvertAngularLine(string stringToConvert, IEnumerable<VersionChange> versionChangeList, ReportBuilder reportBuilder);
     }
 }

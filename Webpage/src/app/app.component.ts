@@ -4,10 +4,9 @@ import { CodeModel } from '@ngstack/code-editor/public_api';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   theme = 'vs-dark';
 
   codeModel: CodeModel = {
@@ -19,12 +18,11 @@ export class AppComponent {
   options = {
     contextmenu: true,
     minimap: {
-      enabled: true
-    }
+      enabled: true,
+    },
   };
 
   onCodeChanged(value: string) {
     console.log(value);
   }
-
 }

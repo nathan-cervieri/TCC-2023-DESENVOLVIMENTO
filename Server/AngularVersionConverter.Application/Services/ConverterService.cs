@@ -4,8 +4,8 @@ using AngularVersionConverter.Application.Interfaces;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Reports;
+using AngularVersionConverter.Infra.Interfaces;
 using AngularVersionConverter.Models;
-using AngularVersionConverterApplication.Interfaces.Repository;
 using System.Text;
 
 namespace AngularVersionConverter.Application.Services
@@ -19,18 +19,37 @@ namespace AngularVersionConverter.Application.Services
             this.versionChangeRepository = versionChangeRepository;
         }
 
+        public IEnumerable<AngularVersionEnum> GetAngularVersionEnums()
+        {
+            var values = Enum.GetValues(typeof(AngularVersionEnum)).Cast<AngularVersionEnum>().Where(versionEnum => versionEnum != AngularVersionEnum.None);
+            return values;
+        }
+
+        public Report GetAllOneTimeReports(AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        {
+            var reportBuilder = new ReportBuilder();
+            var allOneTimeChanges = versionChangeRepository.GetStaticChangesFrom(versionFrom, versionTo);
+
+            foreach (var change in allOneTimeChanges)
+            {
+                reportBuilder.AddChange(change.Description, change.Version, change.InformationUrl);
+            }
+
+            return reportBuilder.Build();
+        }
+
         public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
         {
             var fileString = fileToConvert.ReadStreamToEnd();
             var separatedTsFileInLines = fileString.Split('\n');
             var reportBuilder = new ReportBuilder(versionFrom, versionTo);
 
-            var versionChanges = versionChangeRepository.GetVersionsFromTo(versionFrom, versionTo);
+            var versionChanges = versionChangeRepository.GetDynamicChangesFromTo(versionFrom, versionTo);
 
             var finalFile = new StringBuilder();
             foreach (var line in separatedTsFileInLines)
             {
-                finalFile.Append(ConvertAngularLine(line, versionChanges, reportBuilder));
+                finalFile.AppendLine(ConvertAngularLine(line, versionChanges, reportBuilder));
                 reportBuilder.IncrementLine();
             }
 
@@ -74,6 +93,11 @@ namespace AngularVersionConverter.Application.Services
             if (changeType == ChangeTypeEnum.SingleImportOriginChange || changeType == ChangeTypeEnum.MultipleImportOriginChange)
             {
                 return ImportHandler.ApplyImportOriginChange(line, change, reportBuilder);
+            }
+            if (changeType == ChangeTypeEnum.NoChangeOnlyWarn)
+            {
+                reportBuilder.AddChange(change.Description, change.Version);
+                return line;
             }
 
             throw new InvalidOperationException("Change type not yet supported");

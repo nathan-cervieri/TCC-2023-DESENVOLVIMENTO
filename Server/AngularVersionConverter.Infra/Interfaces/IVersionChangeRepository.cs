@@ -1,11 +1,12 @@
 ﻿using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Models;
 
-namespace AngularVersionConverterApplication.Interfaces.Repository
+namespace AngularVersionConverter.Infra.Interfaces
 {
     public interface IVersionChangeRepository
     {
-        public IEnumerable<VersionChange> GetAll();
-        public IEnumerable<VersionChange> GetVersionsFromTo(AngularVersionEnum versionFrom, AngularVersionEnum versionTo);
+        IEnumerable<VersionChange> GetAll();
+        IEnumerable<VersionChange> GetStaticChangesFrom(AngularVersionEnum versionFrom, AngularVersionEnum versionTo);
+        IEnumerable<VersionChange> GetDynamicChangesFromTo(AngularVersionEnum versionFrom, AngularVersionEnum versionTo);
     }
 }

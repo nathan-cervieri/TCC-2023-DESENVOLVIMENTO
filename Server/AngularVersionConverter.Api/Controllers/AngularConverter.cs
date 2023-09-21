@@ -1,4 +1,6 @@
+using AngularVersionConverter.Application.Extensions;
 using AngularVersionConverter.Application.Interfaces;
+using AngularVersionConverter.Domain.Requests;
 using AngularVersionConverter.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +20,27 @@ namespace AngularVersionConverter.Api.Controllers
             this.converterService = converterService;
         }
 
-        [HttpGet(Name = "GetConversionVersionsEnum")]
-        public IEnumerable<AngularVersionEnum> GetEnumValues()
+        [HttpGet()]
+        [Route("Version")]
+        public ActionResult GetEnumValues()
         {
-            return Enum.GetValues(typeof(AngularVersionEnum)).Cast<AngularVersionEnum>();
+            var values = converterService.GetAngularVersionEnums();
+            return Ok(values);
+        }
+
+        [HttpGet()]
+        [Route("StaticChanges")]
+        public ActionResult GetStaticChanges([FromQuery] AngularVersionEnum versionFrom, [FromQuery] AngularVersionEnum versionTo)
+        {
+            var staticChanges = converterService.GetAllOneTimeReports(versionFrom, versionTo);
+            return Ok(staticChanges);
+        }
+
+        [HttpPost(Name = "ConvertFile")]
+        public ActionResult ConvertFile(ConvertRequest request)
+        {
+            var codeReport = converterService.ConvertAngularFile(request.CodeToConvert.ToStream(), request.VersionFrom, request.VersionTo);
+            return Ok(codeReport);
         }
     }
 }

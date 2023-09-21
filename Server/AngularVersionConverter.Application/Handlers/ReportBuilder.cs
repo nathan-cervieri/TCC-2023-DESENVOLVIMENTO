@@ -15,32 +15,33 @@ namespace AngularVersionConverter.Application.Handlers
             report = new Report(versionFrom, versionTo);
         }
 
-        public ReportBuilder AddChange(string change, AngularVersionEnum originVersion, FindReplaceTypeEnum findReplaceType)
+        public ReportBuilder AddChange(string change, AngularVersionEnum originVersion, FindReplaceTypeEnum findReplaceType, string changeUrl = "")
         {
             if (findReplaceType == FindReplaceTypeEnum.NewLine
                 || findReplaceType == FindReplaceTypeEnum.ReplaceAndNewLine
                 || findReplaceType == FindReplaceTypeEnum.MultipleReplaceAndNewLine)
             {
-                return AddExtraLineChange(change, originVersion);
+                return AddExtraLineChange(change, originVersion, changeUrl);
             }
 
-            return AddChange(change, originVersion);
+            return AddChange(change, originVersion, changeUrl);
         }
 
-        public ReportBuilder AddChange(string change, AngularVersionEnum originVersion)
+        public ReportBuilder AddChange(string change, AngularVersionEnum originVersion, string changeUrl = "")
         {
             var reportChange = new ReportChange
             {
                 ChangeDescription = change,
                 OriginVersion = originVersion,
-                LinesChanged = new int[] { line }
+                LinesChanged = new int[] { line },
+                ChangeURL = changeUrl
             };
 
             changes.Add(reportChange);
             return this;
         }
 
-        public ReportBuilder AddExtraLineChange(string change, AngularVersionEnum originVersion)
+        public ReportBuilder AddExtraLineChange(string change, AngularVersionEnum originVersion, string changeUrl = "")
         {
             var lines = new int[] { line, line + 1 };
             IncrementLine();
@@ -49,7 +50,8 @@ namespace AngularVersionConverter.Application.Handlers
             {
                 ChangeDescription = change,
                 OriginVersion = originVersion,
-                LinesChanged = lines
+                LinesChanged = lines,
+                ChangeURL = changeUrl
             };
 
             changes.Add(reportChange);

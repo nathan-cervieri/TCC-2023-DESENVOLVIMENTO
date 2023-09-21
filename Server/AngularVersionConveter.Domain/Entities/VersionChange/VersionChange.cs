@@ -15,6 +15,8 @@ namespace AngularVersionConverter.Domain.Entities.VersionChange
         public ChangeTypeEnum ChangeType { get; set; }
         public string ChangeFinderRegexString { get; set; } = "";
         public string Description { get; set; } = "";
+        public string InformationUrl { get; set; } = "";
+        public bool ApplyOnce { get; set; } = false;
         public IEnumerable<FindReplace> FindReplaceList { get; set; } = new List<FindReplace>();
     }
 }

@@ -3,7 +3,7 @@ using AngularVersionConverter.Application.Services;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
-using AngularVersionConverterApplication.Interfaces.Repository;
+using AngularVersionConverter.Infra.Interfaces;
 using Moq;
 
 namespace AngularVersionConverter.Test.ConverterServiceTest
