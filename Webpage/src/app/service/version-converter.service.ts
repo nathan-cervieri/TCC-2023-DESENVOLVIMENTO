@@ -3,6 +3,7 @@ import { Report } from '../model/report';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { Observable } from 'rxjs';
+import { FileChangeRequest } from '../model/file-change-request';
 
 const VERSION_CONVERTER_REQUEST_URL =
   environment.versionConverterDefaultUrl + 'AngularConverter';
@@ -20,7 +21,7 @@ export class VersionConverterService {
     versionFrom: number,
     versionTo: number
   ): Observable<Report> {
-    const url = `VERSION_CONVERTER_REQUEST_URL?versionFrom=${versionFrom}&versionTo=${versionTo}`;
+    const url = `${VERSION_CONVERTER_REQUEST_URL}?versionFrom=${versionFrom}&versionTo=${versionTo}`;
     return this.http.get<Report>(url);
   }
 
@@ -29,12 +30,15 @@ export class VersionConverterService {
     versionFrom: number,
     versionTo: number
   ): Observable<Report> {
-    const getFileChanges = {
-      file,
-      versionFrom,
-      versionTo,
+    const getFileChanges: FileChangeRequest = {
+      codeToConvert: file,
+      versionFrom: versionFrom,
+      versionTo: versionTo,
     };
-    const url = `VERSION_CONVERTER_REQUEST_URL?versionFrom=${versionFrom}&versionTo=${versionTo}`;
-    return this.http.post<Report>(url, getFileChanges);
+
+    return this.http.post<Report>(
+      VERSION_CONVERTER_REQUEST_URL,
+      getFileChanges
+    );
   }
 }

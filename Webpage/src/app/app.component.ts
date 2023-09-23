@@ -25,4 +25,6 @@ export class AppComponent {
   onCodeChanged(value: string) {
     console.log(value);
   }
+
+  getAllChangesFromVersions() {}
 }

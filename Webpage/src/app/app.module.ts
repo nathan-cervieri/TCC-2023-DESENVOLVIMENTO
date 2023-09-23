@@ -4,9 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ReportComponent],
   imports: [BrowserModule, CodeEditorModule.forRoot(), HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

@@ -13,4 +13,10 @@ describe('VersionConverterService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('getAllowedVersions', () => {
+    it('Should return number list if succesful', () => {
+      service.getAllStaticChangesFromVersions();
+    });
+  });
 });
