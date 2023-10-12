@@ -1,0 +1,9 @@
+<h2></h2>
+<ul *ngIf="fixedChangesReport && fixedChangesReport.changes && fixedChangesReport.changes.length > 0">
+	<li *ngFor="let change of fixedChangesReport.changes">{{change.changeDescription}} <a *ngIf="change.changeUrl"
+			[href]="change.changeUrl">({{ 'READ_MORE' | translate }})</a></li>
+</ul>
+<ul *ngIf="fileChangesReport && fileChangesReport.changes && fileChangesReport.changes.length > 0">
+	<li *ngFor="let change of fileChangesReport.changes">{{change.changeDescription}} <a *ngIf="change.changeUrl"
+			[href]="change.changeUrl">({{ 'READ_MORE' | translate }})</a></li>
+</ul>

@@ -6,22 +6,22 @@ import { Observable } from 'rxjs';
 import { FileChangeRequest } from '../model/file-change-request';
 
 const VERSION_CONVERTER_REQUEST_URL =
-  environment.versionConverterDefaultUrl + 'AngularConverter';
+  environment.versionConverterDefaultUrl + '/AngularConverter';
 @Injectable({
   providedIn: 'root',
 })
 export class VersionConverterService {
   public constructor(private http: HttpClient) {}
 
-  public getAllowedVersions(): Observable<number> {
-    return this.http.get<number>(VERSION_CONVERTER_REQUEST_URL);
+  public getAllowedVersions(): Observable<number[]> {
+    return this.http.get<number[]>(`${VERSION_CONVERTER_REQUEST_URL}/Versions`);
   }
 
   public getAllStaticChangesFromVersions(
     versionFrom: number,
     versionTo: number
   ): Observable<Report> {
-    const url = `${VERSION_CONVERTER_REQUEST_URL}?versionFrom=${versionFrom}&versionTo=${versionTo}`;
+    const url = `${VERSION_CONVERTER_REQUEST_URL}/StaticChanges?versionFrom=${versionFrom}&versionTo=${versionTo}`;
     return this.http.get<Report>(url);
   }
 

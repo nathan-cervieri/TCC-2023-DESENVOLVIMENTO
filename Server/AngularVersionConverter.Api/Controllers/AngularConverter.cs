@@ -21,7 +21,7 @@ namespace AngularVersionConverter.Api.Controllers
         }
 
         [HttpGet()]
-        [Route("Version")]
+        [Route("Versions")]
         public ActionResult GetEnumValues()
         {
             var values = converterService.GetAngularVersionEnums();

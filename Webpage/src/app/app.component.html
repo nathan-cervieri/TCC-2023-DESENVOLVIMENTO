@@ -1,7 +1,10 @@
 <header>
-  <h1>Angular Version Converter</h1>
+  <h1>{{ 'TITLE' | translate }}</h1>
 </header>
 <div>
-  <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options"
-    (valueChanged)="onCodeChanged($event)"></ngs-code-editor>
+  <app-version-picker (versionToChange)="versionTo = $event"
+    (versionFromChange)="versionFrom = $event"></app-version-picker>
+  <app-single-code-converter class="col-md-12"></app-single-code-converter>
+  <div></div>
+  <!-- <input type="file" class="file-upload" accept=".ts" onchange="console.log(event.target.files)"> -->
 </div>

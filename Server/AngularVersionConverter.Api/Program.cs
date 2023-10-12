@@ -1,8 +1,19 @@
 using AngularVersionConverter.Api.Extensions;
 
+var MyAllowSpecificOrigins = "allowAllCors";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin().AllowAnyHeader();
+                      });
+});
 
 builder.Services.AddConverterServices();
 builder.Services.AddControllers();
@@ -20,6 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CodeModel } from '@ngstack/code-editor/public_api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -7,24 +7,14 @@ import { CodeModel } from '@ngstack/code-editor/public_api';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  theme = 'vs-dark';
 
-  codeModel: CodeModel = {
-    language: 'typescript',
-    uri: 'main.ts',
-    value: '',
-  };
+  versionFrom = 14;
+  versionTo = 15;
 
-  options = {
-    contextmenu: true,
-    minimap: {
-      enabled: true,
-    },
-  };
+  constructor(public translate: TranslateService) {
+    translate.addLangs(['en', 'pt']);
+    translate.setDefaultLang('pt');
 
-  onCodeChanged(value: string) {
-    console.log(value);
+    translate.use('pt');
   }
-
-  getAllChangesFromVersions() {}
 }
