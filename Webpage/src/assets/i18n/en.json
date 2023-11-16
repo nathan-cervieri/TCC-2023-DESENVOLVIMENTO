@@ -1,5 +1,10 @@
 {
 	"CONVERT": "Convert",
 	"READ_MORE": "Read more",
-	"TITLE": "Angular Version Converter"
+	"TITLE": "Angular Version Converter",
+	"FOLDER_UPLOAD": "Upload folder",
+	"CLEAR_FILES": "Clear files",
+	"FILES": "files",
+	"FROM": "from",
+	"TO": "to"
 }

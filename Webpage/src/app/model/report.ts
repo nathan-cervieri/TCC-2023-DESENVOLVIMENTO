@@ -11,3 +11,8 @@ export class ReportChange {
   public changeUrl = '';
   public linesChanged: number[] = [];
 }
+
+export class CodeVisualizer {
+  public baseFile = '';
+  public returnReport?: Report  = undefined;
+}

@@ -1,5 +1,5 @@
 <app-report-list [fixedChangesReport]="fixedChangesReport" [fileChangesReport]="codeChangeReport"></app-report-list>
-<app-code-visualizer (codeChanged)="currentCode = $event"></app-code-visualizer>
+<app-code-visualizer (codeChanged)="currentCode = $event" [code]="displayCode ?? ''"></app-code-visualizer>
 <br>
 <button (click)="convertCode()">{{ 'CONVERT' | translate }}</button>
 <br>

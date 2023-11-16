@@ -1,5 +1,10 @@
 {
 	"CONVERT": "Converter",
 	"READ_MORE": "Leia mais",
-	"TITLE": "Conversor de Versão Angular"
+	"TITLE": "Conversor de Versão Angular",
+	"FOLDER_UPLOAD": "Upload pasta",
+	"CLEAR_FILES": "Limpar arquivos",
+	"FILES": "arquivos",
+	"FROM": "de",
+	"TO": "para"
 }

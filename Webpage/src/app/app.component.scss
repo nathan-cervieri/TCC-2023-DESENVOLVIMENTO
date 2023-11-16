@@ -1,0 +1,12 @@
+.app-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.converter-container {
+	flex-grow: 3;
+}
+
+.file-coverter-list {
+	flex-grow: 1;
+}

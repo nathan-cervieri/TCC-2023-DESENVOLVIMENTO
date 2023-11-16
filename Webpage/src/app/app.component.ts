@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { CodeVisualizer } from './model/report';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
 
+  convertedCodeVisualizer?: CodeVisualizer;
+
   versionFrom = 14;
   versionTo = 15;
+
+  fileList: File[] = [];
 
   constructor(public translate: TranslateService) {
     translate.addLangs(['en', 'pt']);

@@ -10,7 +10,11 @@ import { Report } from '../model/report';
 export class SingleCodeConverterComponent {
   currentCode?: string;
   fixedChangesReport?: Report;
+
+  @Input()
   codeChangeReport?: Report;
+  @Input()
+  displayCode?: string;
 
   @Input() versionFrom = 14;
   @Input() versionTo = 15;

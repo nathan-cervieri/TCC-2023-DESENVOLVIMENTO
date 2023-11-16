@@ -1,0 +1,5 @@
+<input id="folderUpload" type="file" webkitdirectory mozdirectory (change)="folderUploaded($event)" />
+<button (click)="clickFolderUpload()">{{ "FOLDER_UPLOAD" | translate}}</button>
+<button (click)="clearFiles()">{{ "CLEAR_FILES" | translate }}</button>
+<button *ngIf="shouldDisplayConvertButton()" (click)="emitFiles()">{{ "CONVERT" | translate }}</button>
+<div *ngIf="shouldDisplayFileCount()">{{relevantFiles.length}} {{"FILES" | translate}}</div>

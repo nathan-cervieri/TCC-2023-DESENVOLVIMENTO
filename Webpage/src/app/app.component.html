@@ -1,10 +1,20 @@
 <header>
   <h1>{{ 'TITLE' | translate }}</h1>
 </header>
-<div>
-  <app-version-picker (versionToChange)="versionTo = $event"
-    (versionFromChange)="versionFrom = $event"></app-version-picker>
-  <app-single-code-converter class="col-md-12"></app-single-code-converter>
-  <div></div>
-  <!-- <input type="file" class="file-upload" accept=".ts" onchange="console.log(event.target.files)"> -->
+<div class="app-container">
+  <div class="converter-container">
+    <app-folder-input (uploadedFiles)="fileList = $event"></app-folder-input>
+    <br>
+    <br>
+    <app-version-picker (versionToChange)="versionTo = $event"
+      (versionFromChange)="versionFrom = $event"></app-version-picker>
+<app-single-code-converter *ngIf="!convertedCodeVisualizer" [versionFrom]="versionFrom" [versionTo]="versionTo"
+  class="col-md-12"></app-single-code-converter>
+<app-single-code-converter *ngIf="convertedCodeVisualizer" [versionFrom]="versionFrom" [versionTo]="versionTo"
+  class="col-md-12" [codeChangeReport]="convertedCodeVisualizer.returnReport"
+  [displayCode]="convertedCodeVisualizer.baseFile"></app-single-code-converter>
+
+</div>
+<app-file-converter-list class="file-coverter-list" [fileList]="fileList" [versionFrom]="versionFrom"
+  [versionTo]="versionTo" (displayConvertedCode)="convertedCodeVisualizer = $event"></app-file-converter-list>
 </div>

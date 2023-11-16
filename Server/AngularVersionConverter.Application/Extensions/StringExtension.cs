@@ -5,7 +5,6 @@ namespace AngularVersionConverter.Application.Extensions
 {
     public static class StringExtension
     {
-
         public static IEnumerable<string> SplitAngularFileStringIntoLines(this string file)
         {
             var separatedTsFileInFunctions = file.Split('\n').SelectMany(line => line.Split(";"));
@@ -36,4 +35,5 @@ namespace AngularVersionConverter.Application.Extensions
         }
 
     }
+
 }

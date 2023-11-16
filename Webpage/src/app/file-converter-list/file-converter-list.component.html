@@ -1,0 +1,4 @@
+<div *ngIf="shouldDisplayFileConverterList()" id="fileConverterList">
+	<app-file-converter *ngFor="let file of fileList" [file]="file" [versionFrom]="versionFrom" [versionTo]="versionTo"
+		(displayConvertedCode)="handleDisplayConvertedCode($event)"></app-file-converter>
+</div>

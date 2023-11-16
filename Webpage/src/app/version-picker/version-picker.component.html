@@ -1,8 +1,8 @@
-<span>From: </span>
+<span>{{ "FROM" | translate}}: </span>
 <select (change)="changeVersionFrom($event)">
 	<option *ngFor="let version of versionsFrom" [value]="version">{{ version }}</option>
 </select>
-<span>To: </span>
+<span>{{ "TO" | translate}}: </span>
 <select (change)="changeVersionTo($event)">
 	<option *ngFor="let version of versionsTo" [value]="version">{{ version }}</option>
 </select>
