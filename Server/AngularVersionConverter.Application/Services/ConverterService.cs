@@ -21,11 +21,13 @@ namespace AngularVersionConverter.Application.Services
 
         public IEnumerable<AngularVersionEnum> GetAngularVersionEnums()
         {
-            var values = Enum.GetValues(typeof(AngularVersionEnum)).Cast<AngularVersionEnum>().Where(versionEnum => versionEnum != AngularVersionEnum.None);
+            var values = Enum.GetValues(typeof(AngularVersionEnum)).Cast<AngularVersionEnum>()
+                .Where(versionEnum => versionEnum != AngularVersionEnum.None);
             return values;
         }
 
-        public Report GetAllOneTimeReports(AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        public Report GetAllOneTimeReports(AngularVersionEnum versionFrom = AngularVersionEnum.Angular14,
+            AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
         {
             var reportBuilder = new ReportBuilder();
             var allOneTimeChanges = versionChangeRepository.GetStaticChangesFrom(versionFrom, versionTo);
@@ -38,7 +40,8 @@ namespace AngularVersionConverter.Application.Services
             return reportBuilder.Build();
         }
 
-        public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular14,
+            AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
         {
             var fileString = fileToConvert.ReadStreamToEnd();
             var separatedTsFileInLines = fileString.Split("\r\n");
