@@ -41,7 +41,7 @@ namespace AngularVersionConverter.Application.Services
         public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
         {
             var fileString = fileToConvert.ReadStreamToEnd();
-            var separatedTsFileInLines = fileString.Split('\n');
+            var separatedTsFileInLines = fileString.Split("\r\n");
             var reportBuilder = new ReportBuilder(versionFrom, versionTo);
 
             var versionChanges = versionChangeRepository.GetDynamicChangesFromTo(versionFrom, versionTo);

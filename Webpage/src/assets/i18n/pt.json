@@ -6,5 +6,7 @@
 	"CLEAR_FILES": "Limpar arquivos",
 	"FILES": "arquivos",
 	"FROM": "de",
-	"TO": "para"
+	"TO": "para",
+	"GENERAL": "Geral",
+	"SPECIFIC": "Específico"
 }

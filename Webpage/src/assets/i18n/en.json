@@ -6,5 +6,7 @@
 	"CLEAR_FILES": "Clear files",
 	"FILES": "files",
 	"FROM": "from",
-	"TO": "to"
+	"TO": "to",
+	"GENERAL": "General",
+	"SPECIFIC": "Specific"
 }
