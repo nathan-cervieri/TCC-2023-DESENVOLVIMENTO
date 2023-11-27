@@ -1,4 +1,4 @@
-﻿using AngularVersionConverter.Models;
+﻿using AngularVersionConverter.Domain.Entities;
 
 namespace AngularVersionConverter.Domain.Reports
 {
@@ -6,7 +6,7 @@ namespace AngularVersionConverter.Domain.Reports
     {
         public Report() { }
 
-        public Report(AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        public Report(AngularVersionEnum versionFrom = AngularVersionEnum.Angular15, AngularVersionEnum versionTo = AngularVersionEnum.Angular16)
         {
             VersionFrom = versionFrom;
             VersionTo = versionTo;

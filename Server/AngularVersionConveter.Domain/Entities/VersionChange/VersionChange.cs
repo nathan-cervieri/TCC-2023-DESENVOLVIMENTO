@@ -1,6 +1,5 @@
 ﻿using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
-using AngularVersionConverter.Models;
 
 namespace AngularVersionConverter.Domain.Entities.VersionChange
 {

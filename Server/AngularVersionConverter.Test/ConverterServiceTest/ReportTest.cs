@@ -1,4 +1,5 @@
 ﻿using AngularVersionConverter.Application.Services;
+using AngularVersionConverter.Domain.Entities;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
@@ -23,7 +24,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             return new VersionChange
             {
                 Id = new Guid(),
-                Version = Models.AngularVersionEnum.Angular15,
+                Version = AngularVersionEnum.Angular16,
                 ChangeType = ChangeTypeEnum.SingleImportOriginChange,
                 ChangeFinderRegexString = @"\s*XhrFactory\s*",
                 FindReplaceList = new List<FindReplace>
@@ -61,7 +62,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             return new VersionChange
             {
                 Id = new Guid(),
-                Version = Models.AngularVersionEnum.Angular15,
+                Version = AngularVersionEnum.Angular16,
                 ChangeType = ChangeTypeEnum.MultipleImportOriginChange,
                 ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser'$",
                 FindReplaceList = new List<FindReplace>

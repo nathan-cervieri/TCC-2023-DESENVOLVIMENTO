@@ -1,4 +1,4 @@
-﻿using AngularVersionConverter.Models;
+﻿using AngularVersionConverter.Domain.Entities;
 
 namespace AngularVersionConverter.Domain.Reports
 {

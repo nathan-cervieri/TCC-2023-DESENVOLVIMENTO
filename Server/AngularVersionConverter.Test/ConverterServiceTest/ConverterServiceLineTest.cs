@@ -1,5 +1,6 @@
 ﻿using AngularVersionConverter.Application.Handlers;
 using AngularVersionConverter.Application.Services;
+using AngularVersionConverter.Domain.Entities;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
@@ -77,7 +78,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             return new VersionChange
             {
                 Id = new Guid(),
-                Version = Models.AngularVersionEnum.Angular15,
+                Version = AngularVersionEnum.Angular16,
                 ChangeType = ChangeTypeEnum.SingleImportOriginChange,
                 ChangeFinderRegexString = @"\s*XhrFactory\s*",
                 FindReplaceList = new List<FindReplace>
@@ -95,7 +96,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                         FindChangeString = @"{.*\s*,\s*XhrFactory\s*.*}",
                         WhatReplaceRegex = @",\s*XhrFactory",
                         ReplaceText = @"",
-                        NewLine = @"import { XhrFactory } from '@angular/common"
+                        NewLine = @"import { XhrFactory } from '@angular/common;"
                     },
                     new FindReplace
                     {
@@ -103,7 +104,7 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
                         FindChangeString = @"{\s*XhrFactory\s*,.*}",
                         WhatReplaceRegex = @"XhrFactory\s*,\s*",
                         ReplaceText = @"",
-                        NewLine = @"import { XhrFactory } from '@angular/common"
+                        NewLine = @"import { XhrFactory } from '@angular/common;"
                     }
                 },
                 Description = "Simple import change"
@@ -115,9 +116,9 @@ namespace AngularVersionConverter.Test.ConverterServiceTest
             return new VersionChange
             {
                 Id = new Guid(),
-                Version = Models.AngularVersionEnum.Angular15,
+                Version = AngularVersionEnum.Angular16,
                 ChangeType = ChangeTypeEnum.MultipleImportOriginChange,
-                ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser'$",
+                ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser';+$",
                 FindReplaceList = new List<FindReplace>
                 {
                     new FindReplace

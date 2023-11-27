@@ -1,11 +1,11 @@
 ﻿using AngularVersionConverter.Application.Extensions;
 using AngularVersionConverter.Application.Handlers;
 using AngularVersionConverter.Application.Interfaces;
+using AngularVersionConverter.Domain.Entities;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Reports;
 using AngularVersionConverter.Infra.Interfaces;
-using AngularVersionConverter.Models;
 using System.Text;
 
 namespace AngularVersionConverter.Application.Services
@@ -26,8 +26,8 @@ namespace AngularVersionConverter.Application.Services
             return values;
         }
 
-        public Report GetAllOneTimeReports(AngularVersionEnum versionFrom = AngularVersionEnum.Angular14,
-            AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        public Report GetAllOneTimeReports(AngularVersionEnum versionFrom = AngularVersionEnum.Angular15,
+            AngularVersionEnum versionTo = AngularVersionEnum.Angular16)
         {
             var reportBuilder = new ReportBuilder();
             var allOneTimeChanges = versionChangeRepository.GetStaticChangesFrom(versionFrom, versionTo);
@@ -40,8 +40,7 @@ namespace AngularVersionConverter.Application.Services
             return reportBuilder.Build();
         }
 
-        public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular14,
-            AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular15, AngularVersionEnum versionTo = AngularVersionEnum.Angular16)
         {
             var fileString = fileToConvert.ReadStreamToEnd();
             var separatedTsFileInLines = fileString.Split("\r\n");

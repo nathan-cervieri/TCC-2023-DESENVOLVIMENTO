@@ -1,5 +1,5 @@
-﻿using AngularVersionConverter.Domain.Entities.VersionChange;
-using AngularVersionConverter.Models;
+﻿using AngularVersionConverter.Domain.Entities;
+using AngularVersionConverter.Domain.Entities.VersionChange;
 
 namespace AngularVersionConverter.Infra.Interfaces
 {

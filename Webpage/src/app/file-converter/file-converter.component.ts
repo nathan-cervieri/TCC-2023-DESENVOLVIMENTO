@@ -13,9 +13,9 @@ export class FileConverterComponent implements OnInit {
   @Input()
   file: File | undefined = undefined;
   @Input()
-  versionFrom = 14;
+  versionFrom = 15;
   @Input()
-  versionTo = 15;
+  versionTo = 16;
 
   @Output()
   displayConvertedCode = new EventEmitter<CodeVisualizer>();

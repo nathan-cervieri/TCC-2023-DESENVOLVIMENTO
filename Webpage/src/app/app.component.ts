@@ -11,8 +11,8 @@ export class AppComponent {
 
   convertedCodeVisualizer?: CodeVisualizer;
 
-  versionFrom = 14;
-  versionTo = 15;
+  versionFrom = 15;
+  versionTo = 16;
 
   fileList: File[] = [];
 

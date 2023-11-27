@@ -16,8 +16,8 @@ export class SingleCodeConverterComponent {
   @Input()
   displayCode?: string;
 
-  @Input() versionFrom = 14;
-  @Input() versionTo = 15;
+  @Input() versionFrom = 15;
+  @Input() versionTo = 16;
 
   constructor(private versionConverterService: VersionConverterService) {}
 

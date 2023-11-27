@@ -1,7 +1,7 @@
 ﻿using AngularVersionConverter.Application.Handlers;
+using AngularVersionConverter.Domain.Entities;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Reports;
-using AngularVersionConverter.Models;
 
 namespace AngularVersionConverter.Application.Interfaces
 {

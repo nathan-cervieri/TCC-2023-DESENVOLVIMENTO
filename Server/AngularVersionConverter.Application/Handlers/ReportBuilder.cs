@@ -1,6 +1,6 @@
-﻿using AngularVersionConverter.Domain.Entities.VersionChange;
+﻿using AngularVersionConverter.Domain.Entities;
+using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Reports;
-using AngularVersionConverter.Models;
 
 namespace AngularVersionConverter.Application.Handlers
 {
@@ -10,7 +10,7 @@ namespace AngularVersionConverter.Application.Handlers
         private int line = 1;
         private readonly List<ReportChange> changes = new();
 
-        public ReportBuilder(AngularVersionEnum versionFrom = AngularVersionEnum.Angular14, AngularVersionEnum versionTo = AngularVersionEnum.Angular15)
+        public ReportBuilder(AngularVersionEnum versionFrom = AngularVersionEnum.Angular15, AngularVersionEnum versionTo = AngularVersionEnum.Angular16)
         {
             report = new Report(versionFrom, versionTo);
         }

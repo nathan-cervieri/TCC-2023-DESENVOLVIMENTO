@@ -1,4 +1,5 @@
 ﻿using AngularVersionConverter.Application.Handlers;
+using AngularVersionConverter.Domain.Entities;
 using AngularVersionConverter.Domain.Entities.VersionChange;
 using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
@@ -38,7 +39,7 @@ namespace AngularVersionConverter.Test.HandlersTest
             var updatedLine = ImportHandler.ApplyImportOriginChange(oldImportLine, versionChange, new ReportBuilder());
 
             // Assert
-            var newLine = "import { " + extraImports + " } from '@angular/common/http\r\nimport { XhrFactory } from '@angular/common";
+            var newLine = "import { " + extraImports + " } from '@angular/common/http\r\nimport { XhrFactory } from '@angular/common;";
             updatedLine.Should().Be(newLine);
         }
 
@@ -53,14 +54,14 @@ namespace AngularVersionConverter.Test.HandlersTest
         public void MultipleImportIsFromDifferentPackage_MustReplaceLine(string testCase)
         {
             // Setup
-            var baseLine = "import { " + testCase + "} from '@angular/platform-browser'";
+            var baseLine = "import { " + testCase + "} from '@angular/platform-browser';";
             var versionChange = CreateVersionChangeAngularPlatformBrowser();
 
             // Act
             var updatedLine = ImportHandler.ApplyImportOriginChange(baseLine, versionChange, new ReportBuilder());
 
             // Assert
-            var newLine = "import { " + testCase + "} from '@angular/core'";
+            var newLine = "import { " + testCase + "} from '@angular/core';";
             updatedLine.Should().Be(newLine);
         }
 
@@ -71,14 +72,14 @@ namespace AngularVersionConverter.Test.HandlersTest
         public void MultipleImportIsFromDifferentPackage_MustReplaceAndNewLine(string testCase, string baseResult, string newLineResult)
         {
             // Setup
-            var baseLine = "import { " + testCase + " } from '@angular/platform-browser'";
+            var baseLine = "import { " + testCase + " } from '@angular/platform-browser';";
             var versionChange = CreateVersionChangeAngularPlatformBrowser();
 
             // Act
             var updatedLine = ImportHandler.ApplyImportOriginChange(baseLine, versionChange, new ReportBuilder());
 
             // Assert
-            var newLine = "import { " + baseResult + " } from '@angular/platform-browser'\r\nimport { " + newLineResult + " } from '@angular/core'";
+            var newLine = "import { " + baseResult + " } from '@angular/platform-browser';\r\nimport { " + newLineResult + " } from '@angular/core';";
             updatedLine.Should().Be(newLine);
         }
 
@@ -87,7 +88,7 @@ namespace AngularVersionConverter.Test.HandlersTest
             return new VersionChange
             {
                 Id = new Guid(),
-                Version = Models.AngularVersionEnum.Angular15,
+                Version = AngularVersionEnum.Angular16,
                 ChangeType = ChangeTypeEnum.SingleImportOriginChange,
                 ChangeFinderRegexString = @"\s*XhrFactory\s*",
                 FindReplaceList = new List<FindReplace>
@@ -105,7 +106,7 @@ namespace AngularVersionConverter.Test.HandlersTest
                         FindChangeString = @"{.*\s*,\s*XhrFactory\s*.*}",
                         WhatReplaceRegex = @",\s*XhrFactory",
                         ReplaceText = @"",
-                        NewLine = @"import { XhrFactory } from '@angular/common"
+                        NewLine = @"import { XhrFactory } from '@angular/common;"
                     },
                     new FindReplace
                     {
@@ -113,7 +114,7 @@ namespace AngularVersionConverter.Test.HandlersTest
                         FindChangeString = @"{\s*XhrFactory\s*,.*}",
                         WhatReplaceRegex = @"XhrFactory\s*,\s*",
                         ReplaceText = @"",
-                        NewLine = @"import { XhrFactory } from '@angular/common"
+                        NewLine = @"import { XhrFactory } from '@angular/common;"
                     }
                 },
                 Description = "Simple import change"
@@ -125,9 +126,9 @@ namespace AngularVersionConverter.Test.HandlersTest
             return new VersionChange
             {
                 Id = new Guid(),
-                Version = Models.AngularVersionEnum.Angular15,
+                Version = AngularVersionEnum.Angular16,
                 ChangeType = ChangeTypeEnum.MultipleImportOriginChange,
-                ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser'$",
+                ChangeFinderRegexString = @"^import\s*{.*(makeStateKey|StateKey|TransferState)+.*}\s*from\s*'@angular\/platform-browser';+$",
                 FindReplaceList = new List<FindReplace>
                 {
                     new FindReplace
@@ -143,7 +144,7 @@ namespace AngularVersionConverter.Test.HandlersTest
                         FindChangeString = @"{(.*,\s*)?(makeStateKey|StateKey|TransferState)+\s*(,.*)?}",
                         WhatReplaceRegex = @"makeStateKey|StateKey|TransferState",
                         ReplaceText = @"",
-                        NewLine = @"import { {replaced} } from '@angular/core'"
+                        NewLine = @"import { {replaced} } from '@angular/core';"
                     }
                 },
                 Description = "Complex import change"
