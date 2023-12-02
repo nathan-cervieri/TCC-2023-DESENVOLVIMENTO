@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { VersionConverterService } from '../service/version-converter.service';
 import { Report } from '../model/report';
 
@@ -19,15 +19,28 @@ export class SingleCodeConverterComponent {
   @Input() versionFrom = 15;
   @Input() versionTo = 16;
 
-  constructor(private versionConverterService: VersionConverterService) {}
+  constructor(private versionConverterService: VersionConverterService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.codeChangeReport) {
+      return;
+    }
+
+    this.loadStaticChanges();
+  }
 
   convertCode(): void {
+    this.loadStaticChanges();
+
     this.versionConverterService
       .getFileChangesFromVersions(this.currentCode ?? '', this.versionFrom, this.versionTo)
       .subscribe({
         next: (value) => this.handleReportReturn(value),
         error: (error) => console.log(error),
       });
+  }
+
+  loadStaticChanges(): void {
     this.versionConverterService
       .getAllStaticChangesFromVersions(this.versionFrom, this.versionTo)
       .subscribe({

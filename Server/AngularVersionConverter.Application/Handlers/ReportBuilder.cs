@@ -15,6 +15,12 @@ namespace AngularVersionConverter.Application.Handlers
             report = new Report(versionFrom, versionTo);
         }
 
+        public ReportBuilder AddAutomaticChange(string change, AngularVersionEnum originVersion, FindReplaceTypeEnum findReplaceType, string changeUrl = "")
+        {
+            ActivateHasAutomaticChange();
+            return AddChange(change, originVersion, findReplaceType, changeUrl);
+        }
+
         public ReportBuilder AddChange(string change, AngularVersionEnum originVersion, FindReplaceTypeEnum findReplaceType, string changeUrl = "")
         {
             if (findReplaceType == FindReplaceTypeEnum.NewLine
@@ -69,6 +75,19 @@ namespace AngularVersionConverter.Application.Handlers
             line += 1;
             return this;
         }
+
+        public ReportBuilder ActivateHasManualChange()
+        {
+            report.HasManualChange = true;
+            return this;
+        }
+
+        public ReportBuilder ActivateHasAutomaticChange()
+        {
+            report.HasAutomaticChange = true;
+            return this;
+        }
+
 
         public Report Build()
         {

@@ -18,7 +18,7 @@ namespace AngularVersionConverter.Application.Handlers
                     continue;
                 }
 
-                reportBuilder.AddChange(change.Description, change.Version, findReplace.Type, change.InformationUrl);
+                reportBuilder.AddAutomaticChange(change.Description, change.Version, findReplace.Type, change.InformationUrl);
                 return ApplyFindReplaceImport(line, findReplace);
             }
 

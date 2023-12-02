@@ -2,6 +2,8 @@ export class Report {
   public returnFile = '';
   public versionFrom = '';
   public versionTo = '';
+  public hasManualChange = false;
+  public HasAutomaticChange = false;
   public changes: ReportChange[] = [];
 }
 

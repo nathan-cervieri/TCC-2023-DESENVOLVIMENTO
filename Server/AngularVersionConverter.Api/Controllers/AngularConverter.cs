@@ -1,7 +1,7 @@
 using AngularVersionConverter.Application.Extensions;
 using AngularVersionConverter.Application.Interfaces;
+using AngularVersionConverter.Domain.Entities;
 using AngularVersionConverter.Domain.Requests;
-using AngularVersionConverter.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularVersionConverter.Api.Controllers
@@ -39,7 +39,9 @@ namespace AngularVersionConverter.Api.Controllers
         [HttpPost(Name = "ConvertFile")]
         public ActionResult ConvertFile(ConvertRequest request)
         {
+            _logger.LogInformation("Inicio conversão {0}", DateTime.Now.ToString("MM/dd/yy H:mm:ss.ffff zzz"));
             var codeReport = converterService.ConvertAngularFile(request.CodeToConvert.ToStream(), request.VersionFrom, request.VersionTo);
+            _logger.LogInformation("Final conversão {00}", DateTime.Now.ToString("MM/dd/yy H:mm:ss.ffff zzz"));
             return Ok(codeReport);
         }
     }

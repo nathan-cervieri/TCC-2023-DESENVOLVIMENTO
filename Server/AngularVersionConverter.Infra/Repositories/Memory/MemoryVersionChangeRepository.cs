@@ -4,9 +4,9 @@ using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Models.VersionChange.ChangeReplace;
 using AngularVersionConverter.Infra.Interfaces;
 
-namespace AngularVersionConverter.Infra.Repositories.Mocked
+namespace AngularVersionConverter.Infra.Repositories.Memory
 {
-    public class MockVersionChangeRepository : IVersionChangeRepository
+    public class MemoryVersionChangeRepository : IVersionChangeRepository
     {
         private static readonly IEnumerable<VersionChange> versionChangeList = new List<VersionChange>
         {
@@ -162,7 +162,7 @@ namespace AngularVersionConverter.Infra.Repositories.Mocked
                 Version = AngularVersionEnum.Angular16,
                 ChangeType= ChangeTypeEnum.NoChangeOnlyWarn,
                 ApplyOnce= true,
-                ChangeFinderRegexString= "createComponent",
+                ChangeFinderRegexString= "ComponentFactoryResolver",
                 Description = "Update your code to use ViewContainerRef.createComponent without the factory resolver. ComponentFactoryResolver has been removed from Router APIs."
             }, new VersionChange
             {

@@ -99,6 +99,7 @@ namespace AngularVersionConverter.Application.Services
             if (changeType == ChangeTypeEnum.NoChangeOnlyWarn)
             {
                 reportBuilder.AddChange(change.Description, change.Version);
+                reportBuilder.ActivateHasManualChange();
                 return line;
             }
 
