@@ -3,7 +3,7 @@ export class Report {
   public versionFrom = '';
   public versionTo = '';
   public hasManualChange = false;
-  public HasAutomaticChange = false;
+  public hasAutomaticChange = false;
   public changes: ReportChange[] = [];
 }
 

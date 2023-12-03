@@ -7,6 +7,7 @@ using AngularVersionConverter.Domain.Entities.VersionChange.ChangeReplace;
 using AngularVersionConverter.Domain.Reports;
 using AngularVersionConverter.Infra.Interfaces;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AngularVersionConverter.Application.Services
 {
@@ -43,7 +44,7 @@ namespace AngularVersionConverter.Application.Services
         public Report ConvertAngularFile(Stream fileToConvert, AngularVersionEnum versionFrom = AngularVersionEnum.Angular15, AngularVersionEnum versionTo = AngularVersionEnum.Angular16)
         {
             var fileString = fileToConvert.ReadStreamToEnd();
-            var separatedTsFileInLines = fileString.Split("\r\n");
+            var separatedTsFileInLines = Regex.Split(fileString, "\r\n|\n|\r");
             var reportBuilder = new ReportBuilder(versionFrom, versionTo);
 
             var versionChanges = versionChangeRepository.GetDynamicChangesFromTo(versionFrom, versionTo);

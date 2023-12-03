@@ -17,6 +17,11 @@ export class FileConverterComponent implements OnInit {
   @Input()
   versionTo = 16;
 
+  @Input()
+  shouldFilterAutomatic = false;
+  @Input()
+  shouldFilterManual = false;
+
   @Output()
   displayConvertedCode = new EventEmitter<CodeVisualizer>();
 
@@ -28,6 +33,26 @@ export class FileConverterComponent implements OnInit {
 
   ngOnInit(): void {
     this.convertFile();
+  }
+
+  get shouldDisplay(): boolean {
+    if (!this.codeChangeReport) {
+      return true;
+    }
+
+    if (this.shouldFilterAutomatic && this.shouldFilterManual && (this.codeChangeReport.hasAutomaticChange || this.codeChangeReport.hasManualChange)) {
+      return true;
+    }
+
+    if (this.shouldFilterAutomatic && !this.codeChangeReport.hasAutomaticChange) {
+      return false;
+    }
+
+    if (this.shouldFilterManual && !this.codeChangeReport.hasManualChange) {
+      return false;
+    }
+
+    return true;
   }
 
   convertFile() {

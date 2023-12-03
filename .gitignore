@@ -6,6 +6,10 @@
 # Project specific files
 /angular-main/*
 /furbot-frontend/*
+/angularfire-master/*
+/ecosol-website/
+/ERP-Frontend-Angular-dev/*
+/angular-erp-system-master/*
 
 # User-specific files
 *.rsuser

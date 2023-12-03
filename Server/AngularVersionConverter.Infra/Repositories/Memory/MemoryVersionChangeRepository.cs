@@ -69,7 +69,7 @@ namespace AngularVersionConverter.Infra.Repositories.Memory
                         NewLine = @"import { {replaced} } from '@angular/core';"
                     }
                 },
-                Description = "complex import change"
+                Description = "Complex import change"
             }, new VersionChange
             {
                 Id = new Guid(),

@@ -8,5 +8,11 @@
 	"FROM": "de",
 	"TO": "para",
 	"GENERAL": "Geral",
-	"SPECIFIC": "Específico"
+	"SPECIFIC": "Específico",
+	"MANUAL": "Manual",
+	"AUTOMATIC": "Automático",
+	"FILTER_AUTOMATIC": "Filtrar automático",
+	"FILTER_MANUAL": "Filtrar Manual",
+	"CLEAR": "Limpar",
+	"VISUALIZE": "Visualizar"
 }

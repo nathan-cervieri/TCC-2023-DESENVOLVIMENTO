@@ -8,5 +8,11 @@
 	"FROM": "from",
 	"TO": "to",
 	"GENERAL": "General",
-	"SPECIFIC": "Specific"
+	"SPECIFIC": "Specific",
+	"MANUAL": "Manual",
+	"AUTOMATIC": "Automatic",
+	"FILTER_AUTOMATIC": "Filter Automatic",
+	"FILTER_MANUAL": "Filter Manual",
+	"CLEAR": "Clear",
+	"VISUALIZE": "Visualize"
 }

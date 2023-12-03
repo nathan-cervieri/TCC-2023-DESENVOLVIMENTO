@@ -1,4 +1,7 @@
-<p>{{ file?.name ?? '' }} <button *ngIf="codeChangeReport" (click)="emitCodeToShow()">{{"CONVERT" | translate}}</button>
-</p>
-<p *ngIf="codeChangeReport && codeChangeReport.hasManualChange">manual</p>
-<p *ngIf="codeChangeReport && codeChangeReport.HasAutomaticChange">automático</p>
+<span *ngIf="shouldDisplay">
+	<p>{{ file?.name ?? '' }} <button *ngIf="codeChangeReport" (click)="emitCodeToShow()">{{"VISUALIZE" |
+			translate}}</button>
+	</p>
+	<p *ngIf="codeChangeReport && codeChangeReport.hasManualChange">{{"MANUAL" | translate}}</p>
+	<p *ngIf="codeChangeReport && codeChangeReport.hasAutomaticChange">{{"AUTOMATIC" | translate}}</p>
+	</span>

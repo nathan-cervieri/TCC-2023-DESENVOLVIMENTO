@@ -18,11 +18,27 @@ export class FileConverterListComponent {
   @Output()
   displayConvertedCode = new EventEmitter<CodeVisualizer>();
 
+  shouldFilterAutomatic = false;
+  shouldFilterManual = false;
+
   shouldDisplayFileConverterList() {
     return this.fileList?.length > 0
   }
 
   handleDisplayConvertedCode(convertedCode: CodeVisualizer) {
     this.displayConvertedCode.emit(convertedCode);
+  }
+
+  filterAutomatic() {
+    this.shouldFilterAutomatic = !this.shouldFilterAutomatic;
+  }
+
+  filterManual() {
+    this.shouldFilterManual = !this.shouldFilterManual;
+  }
+
+  clearFilter() {
+    this.shouldFilterAutomatic = false;
+    this.shouldFilterManual = false;
   }
 }
